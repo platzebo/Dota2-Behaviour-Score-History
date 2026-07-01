@@ -414,7 +414,15 @@ function App() {
               and only creates a downloadable JSON file. If Steam returns HTTP 429, wait a few minutes and retry.
             </p>
           </div>
-          <pre aria-label="Embedded Steam console exporter script"><code>{exporterScript}</code></pre>
+          <div className="embedded-code" aria-label="Embedded Steam console exporter script">
+            <div className="code-toolbar">
+              <span>steam-conduct-exporter.js</span>
+              <button className="button ghost code-copy" type="button" onClick={() => void copyExporterScript()}>
+                <ClipboardCopy size={16} /> {copiedExporter ? 'Copied' : 'Copy code'}
+              </button>
+            </div>
+            <pre><code>{exporterScript}</code></pre>
+          </div>
         </div>
       </details>
 

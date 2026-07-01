@@ -315,15 +315,39 @@ h1 {
   color: #d4ff72;
 }
 
+.embedded-code {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: rgba(3, 7, 12, 0.76);
+}
+
+.code-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #8fa2bd;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.code-copy {
+  min-height: 34px;
+  padding: 7px 10px;
+  font-size: 0.78rem;
+}
+
 .guide-grid pre {
   max-height: 360px;
   margin: 0;
   overflow: auto;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
   padding: 16px;
   color: #b9c7db;
-  background: rgba(3, 7, 12, 0.76);
+  background: transparent;
   font-size: 0.78rem;
   line-height: 1.45;
   white-space: pre-wrap;
