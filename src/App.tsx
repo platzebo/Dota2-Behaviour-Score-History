@@ -202,6 +202,7 @@ function App() {
   const [error, setError] = useState<string | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [copiedExporter, setCopiedExporter] = useState(false)
+  const [guideOpen, setGuideOpen] = useState(false)
 
   const setParsedHistory = useCallback((nextHistory: ParsedConductHistory | null) => {
     setHistory(nextHistory)
@@ -366,14 +367,56 @@ function App() {
             <h2>Recommended import</h2>
             <p>
               Steam's regular “Save Page As…” often keeps only the first 20 rows. Use the embedded exporter
-              instead: copy it, paste it into the Steam page console, then import the downloaded JSON here.
+              instead: copy it, paste it into the Steam page console, then import the downloaded JSON here. Open
+              the how-to guide below if you want the exact steps.
             </p>
             <button className="button primary full" type="button" onClick={() => void copyExporterScript()}>
               <ClipboardCopy size={18} /> {copiedExporter ? 'Copied exporter script' : 'Copy exporter script'}
             </button>
+            <button
+              className="button ghost full"
+              type="button"
+              onClick={() => {
+                setGuideOpen(true)
+                window.setTimeout(() => document.getElementById('export-guide')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
+              }}
+            >
+              <Info size={18} /> Show how-to guide
+            </button>
           </div>
         </div>
       </section>
+
+      <details
+        id="export-guide"
+        className="exporter-guide"
+        open={guideOpen}
+        onToggle={(event) => setGuideOpen(event.currentTarget.open)}
+      >
+        <summary>How to export the full Steam history with the console script</summary>
+        <div className="guide-grid">
+          <div>
+            <ol>
+              <li>
+                Open the{' '}
+                <a href={STEAM_SOURCE_URL} target="_blank" rel="noreferrer">
+                  Steam data page
+                </a>{' '}
+                while logged in.
+              </li>
+              <li>Open DevTools → Console on that Steam page.</li>
+              <li>Click <strong>Copy exporter script</strong> above and paste it into the console.</li>
+              <li>Press Enter and wait until <code>dota2-conduct-history.json</code> downloads.</li>
+              <li>Drop that JSON file into this app.</li>
+            </ol>
+            <p>
+              The exporter calls Steam's own Load More History endpoint from your logged-in page. It stays local
+              and only creates a downloadable JSON file. If Steam returns HTTP 429, wait a few minutes and retry.
+            </p>
+          </div>
+          <pre aria-label="Embedded Steam console exporter script"><code>{exporterScript}</code></pre>
+        </div>
+      </details>
 
       <section id="import" className="import-section">
         <label
@@ -403,31 +446,6 @@ function App() {
         ) : null}
       </section>
 
-      <details className="exporter-guide">
-        <summary>How to export the full Steam history with the console script</summary>
-        <div className="guide-grid">
-          <div>
-            <ol>
-              <li>
-                Open the{' '}
-                <a href={STEAM_SOURCE_URL} target="_blank" rel="noreferrer">
-                  Steam data page
-                </a>{' '}
-                while logged in.
-              </li>
-              <li>Open DevTools → Console on that Steam page.</li>
-              <li>Click <strong>Copy exporter script</strong> above and paste it into the console.</li>
-              <li>Press Enter and wait until <code>dota2-conduct-history.json</code> downloads.</li>
-              <li>Drop that JSON file into this app.</li>
-            </ol>
-            <p>
-              The exporter calls Steam's own Load More History endpoint from your logged-in page. It stays local
-              and only creates a downloadable JSON file. If Steam returns HTTP 429, wait a few minutes and retry.
-            </p>
-          </div>
-          <pre aria-label="Embedded Steam console exporter script"><code>{exporterScript}</code></pre>
-        </div>
-      </details>
 
       {stats ? (
         <>

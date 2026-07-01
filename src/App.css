@@ -183,6 +183,10 @@ h1 {
   color: #8fa2bd;
 }
 
+.hero-panel .button + .button {
+  margin-top: 10px;
+}
+
 .import-section {
   display: grid;
   gap: 14px;
