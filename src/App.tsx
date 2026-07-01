@@ -202,7 +202,7 @@ function App() {
   const [error, setError] = useState<string | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [copiedExporter, setCopiedExporter] = useState(false)
-  const [guideOpen, setGuideOpen] = useState(false)
+  const [guideOpen, setGuideOpen] = useState(true)
 
   const setParsedHistory = useCallback((nextHistory: ParsedConductHistory | null) => {
     setHistory(nextHistory)
